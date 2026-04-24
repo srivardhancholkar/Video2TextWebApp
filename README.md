@@ -29,11 +29,16 @@ cd client && npm install && cd ..
 # 2. Install Python transcription
 python -m pip install faster-whisper
 
-# 3. Start the application
+# 3. Build the React frontend (REQUIRED — server serves client/build)
+cd client && npm run build && cd ..
+
+# 4. Start the application
 npm start
 
-# 4. Open browser to http://localhost:3000
+# 5. Open browser to http://localhost:3000
 ```
+
+> ⚠️ **Don't skip step 3.** `server.js` serves static files from `client/build/`. If that folder doesn't exist, `http://localhost:3000` will return a 404 / blank page even though the server is running. Re-run `npm run build` inside `client/` whenever you change frontend code.
 
 **Total setup time**: ~5 minutes (first run downloads Whisper model)
 
@@ -305,6 +310,18 @@ This is normal:
 - Try different browser (Chrome/Firefox recommended)
 - Clear browser cache
 - Ensure app loaded from http://localhost:3000
+
+### ❌ Blank page or "Cannot GET /" at http://localhost:3000
+The React frontend hasn't been built yet. The server serves static files from `client/build/`, which is created by `npm run build`:
+
+```bash
+cd client
+npm run build
+cd ..
+npm start
+```
+
+Re-run the build any time you change code under `client/src/`.
 
 ## 🔐 Security & Privacy
 
